@@ -6,8 +6,8 @@ Wants=hit5-node-c1.service
 [Service]
 Type=simple
 User=ubuntu
-WorkingDirectory=/home/ubuntu/SD2026-GRUPO404
-ExecStart=/home/ubuntu/SD2026-GRUPO404/.venv/bin/python tp1/HIT5/node_c.py \
+WorkingDirectory=/home/ubuntu/SD2026-GRUPO404-TP1
+ExecStart=/home/ubuntu/SD2026-GRUPO404-TP1/.venv/bin/python tp1/HIT5/node_c.py \
     --listen-port 5004 \
     --remote-host 127.0.0.1 \
     --remote-port 5003

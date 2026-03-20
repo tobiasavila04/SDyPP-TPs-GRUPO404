@@ -5,9 +5,9 @@ After=network.target
 [Service]
 Type=simple
 User=ubuntu
-WorkingDirectory=/home/ubuntu/SD2026-GRUPO404
+WorkingDirectory=/home/ubuntu/SD2026-GRUPO404-TP1
 Environment=PORT=5001
-ExecStart=/home/ubuntu/SD2026-GRUPO404/.venv/bin/python tp1/HIT2/server_b.py
+ExecStart=/home/ubuntu/SD2026-GRUPO404-TP1/.venv/bin/python tp1/HIT2/server_b.py
 Restart=always
 RestartSec=3
 StandardOutput=journal

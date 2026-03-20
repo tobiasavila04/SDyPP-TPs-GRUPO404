@@ -5,7 +5,7 @@
 # =============================================================================
 set -euo pipefail
 
-REPO_DIR="/home/ubuntu/SD2026-GRUPO404"
+REPO_DIR="/home/ubuntu/SD2026-GRUPO404-TP1"
 SYSTEMD_DIR="/etc/systemd/system"
 
 SERVICES=(

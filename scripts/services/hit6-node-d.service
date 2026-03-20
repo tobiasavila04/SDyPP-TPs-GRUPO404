@@ -5,9 +5,9 @@ After=network.target
 [Service]
 Type=simple
 User=ubuntu
-WorkingDirectory=/home/ubuntu/SD2026-GRUPO404/tp1
+WorkingDirectory=/home/ubuntu/SD2026-GRUPO404-TP1/tp1
 Environment=TCP_PORT=5005
-ExecStart=/home/ubuntu/SD2026-GRUPO404/.venv/bin/uvicorn HIT6.node_d:app \
+ExecStart=/home/ubuntu/SD2026-GRUPO404-TP1/.venv/bin/uvicorn HIT6.node_d:app \
     --host 0.0.0.0 \
     --port 8086
 Restart=always

@@ -62,4 +62,4 @@ jobs:
           host: ${{secrets.EC2_HOST}}
           username: ${{secrets.EC2_USERNAME}}
           key: ${{secrets.EC2_SSH_KEY}}
-          script: bash /home/ubuntu/SD2026-GRUPO404/scripts/deploy.sh
+          script: bash /home/ubuntu/SD2026-GRUPO404-TP1/scripts/deploy.sh
