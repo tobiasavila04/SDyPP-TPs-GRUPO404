@@ -25,10 +25,10 @@ jobs:
         run: pip install -r requirements-dev.txt
 
       - name: Lint (ruff check)
-        run: ruff check .
+        run: ruff check . [cite_start]--fix
 
-      #- name: Format check (ruff format)
-       # run: ruff format --check .
+      - name: Format check (ruff format)
+        run: ruff format --check . --line-length 150
 
       - name: Run tests
         run: pytest tests/ -v --tb=short
