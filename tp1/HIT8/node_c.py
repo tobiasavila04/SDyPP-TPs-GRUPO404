@@ -147,7 +147,7 @@ def _get_own_ip() -> str:
 
 
 EC2_HOST = "3.144.148.19"
-EC2_GRPC_PORT = 5007   # puerto gRPC del registro en EC2
+EC2_GRPC_PORT = 5007  # puerto gRPC del registro en EC2
 
 
 def main() -> None:

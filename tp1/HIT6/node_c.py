@@ -141,7 +141,7 @@ def _get_own_ip() -> str:
 
 
 EC2_HOST = "3.144.148.19"
-EC2_PORT = 5005   # puerto TCP del registro en EC2
+EC2_PORT = 5005  # puerto TCP del registro en EC2
 
 
 def main() -> None:

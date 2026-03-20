@@ -32,9 +32,7 @@ def saludar(sock):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Nodo A — Cliente TCP con reconexion (HIT #2)"
-    )
+    parser = argparse.ArgumentParser(description="Nodo A — Cliente TCP con reconexion (HIT #2)")
     group = parser.add_mutually_exclusive_group()
     group.add_argument(
         "--local",

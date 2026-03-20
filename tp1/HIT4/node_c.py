@@ -65,7 +65,7 @@ def client_thread(remote_host, remote_port, own_port):
 
 
 EC2_HOST = "3.144.148.19"
-EC2_PORT = 5003   # puerto donde escucha el nodo C en EC2
+EC2_PORT = 5003  # puerto donde escucha el nodo C en EC2
 
 
 def main():

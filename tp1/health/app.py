@@ -10,16 +10,16 @@ from datetime import datetime, timezone
 from fastapi import FastAPI
 
 SERVICES = [
-    {"name": "hit1-server",  "hit": 1, "port": 5000, "proto": "TCP"},
-    {"name": "hit2-server",  "hit": 2, "port": 5001, "proto": "TCP"},
-    {"name": "hit3-server",  "hit": 3, "port": 5002, "proto": "TCP"},
+    {"name": "hit1-server", "hit": 1, "port": 5000, "proto": "TCP"},
+    {"name": "hit2-server", "hit": 2, "port": 5001, "proto": "TCP"},
+    {"name": "hit3-server", "hit": 3, "port": 5002, "proto": "TCP"},
     {"name": "hit4-node-c1", "hit": 4, "port": 5003, "proto": "TCP"},
     {"name": "hit4-node-c2", "hit": 4, "port": 5004, "proto": "TCP"},
     {"name": "hit5-node-c1", "hit": 5, "port": 5003, "proto": "TCP"},
     {"name": "hit5-node-c2", "hit": 5, "port": 5004, "proto": "TCP"},
-    {"name": "hit6-node-d",  "hit": 6, "port": 5005, "proto": "TCP"},
-    {"name": "hit7-node-d",  "hit": 7, "port": 5006, "proto": "TCP"},
-    {"name": "hit8-node-d",  "hit": 8, "port": 5007, "proto": "gRPC"},
+    {"name": "hit6-node-d", "hit": 6, "port": 5005, "proto": "TCP"},
+    {"name": "hit7-node-d", "hit": 7, "port": 5006, "proto": "TCP"},
+    {"name": "hit8-node-d", "hit": 8, "port": 5007, "proto": "gRPC"},
 ]
 
 _start_time = time.time()
