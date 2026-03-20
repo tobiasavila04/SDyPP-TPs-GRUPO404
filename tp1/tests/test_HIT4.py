@@ -1,18 +1,21 @@
 import unittest
 import subprocess
 import time
+import os
+import sys
 
 
 class TestBidirectionalNode(unittest.TestCase):
-    NODE_PATH = "../HIT4/node_c.py"
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    NODE_PATH = os.path.join(BASE_DIR, "HIT4", "node_c.py")
 
     def test_comunicacion_mutua(self):
         print("\n--- Iniciando Test de Nodo C Bidireccional (HIT 4) ---")
 
         # 1. Armamos los comandos exactos que pasaste en la descripción
-        cmd_c1 = ["python", "-u", self.NODE_PATH, "--listen-port", "9001", "--remote-host", "127.0.0.1", "--remote-port", "9002"]
+        cmd_c1 = [sys.executable, "-u", self.NODE_PATH, "--listen-port", "9001", "--remote-host", "127.0.0.1", "--remote-port", "9002"]
 
-        cmd_c2 = ["python", "-u", self.NODE_PATH, "--listen-port", "9002", "--remote-host", "127.0.0.1", "--remote-port", "9001"]
+        cmd_c2 = [sys.executable, "-u", self.NODE_PATH, "--listen-port", "9002", "--remote-host", "127.0.0.1", "--remote-port", "9001"]
 
         # 2. Levantamos la Instancia C1 primero
         print("[Test] Levantando Instancia C1 (escucha en 9001, busca 9002)...")

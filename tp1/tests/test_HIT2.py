@@ -1,21 +1,24 @@
 import unittest
 import subprocess
 import time
+import os
+import sys
 
 
 class TestTCPReconnection(unittest.TestCase):
-    SERVER_PATH = "../HIT2/server_b.py"
-    CLIENT_PATH = "../HIT2/client_a.py"
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    SERVER_PATH = os.path.join(BASE_DIR, "HIT2", "server_b.py")
+    CLIENT_PATH = os.path.join(BASE_DIR, "HIT2", "client_a.py")
 
     def test_flujo_reconexion(self):
         print("\n--- Iniciando Test de Reconexión ---")
 
         # 1. Iniciar Servidor B (Agregamos '-u' para que Python imprima al instante)
-        server_p = subprocess.Popen(["python", "-u", self.SERVER_PATH], stdout=subprocess.PIPE, text=True)
+        server_p = subprocess.Popen([sys.executable, "-u", self.SERVER_PATH], stdout=subprocess.PIPE, text=True)
         time.sleep(1)
 
         # 2. Iniciar Cliente A (También con '-u')
-        client_p = subprocess.Popen(["python", "-u", self.CLIENT_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        client_p = subprocess.Popen([sys.executable, "-u", self.CLIENT_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 
         print("[Test] Verificando primera conexión...")
         time.sleep(2)
@@ -31,7 +34,7 @@ class TestTCPReconnection(unittest.TestCase):
 
         # 5. Volver a levantar el Servidor B
         print("[Test] Reiniciando Servidor B...")
-        server_p_v2 = subprocess.Popen(["python", "-u", self.SERVER_PATH], stdout=subprocess.PIPE, text=True)
+        server_p_v2 = subprocess.Popen([sys.executable, "-u", self.SERVER_PATH], stdout=subprocess.PIPE, text=True)
 
         # 6. Darle tiempo al cliente para conectarse de nuevo
         time.sleep(5)

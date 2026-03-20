@@ -1,19 +1,21 @@
 import unittest
 import subprocess
 import time
+import os
+import sys
 
 
 class TestJSONSerialization(unittest.TestCase):
-    # Actualizamos la ruta a la carpeta del HIT5
-    NODE_PATH = "../HIT5/node_c.py"
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    NODE_PATH = os.path.join(BASE_DIR, "HIT5", "node_c.py")
 
     def test_intercambio_json(self):
         print("\n--- Iniciando Test de Serialización JSON (HIT 5) ---")
 
         # 1. Armamos los comandos igual que en el HIT 4
-        cmd_c1 = ["python", "-u", self.NODE_PATH, "--listen-port", "9001", "--remote-host", "127.0.0.1", "--remote-port", "9002"]
+        cmd_c1 = [sys.executable, "-u", self.NODE_PATH, "--listen-port", "9001", "--remote-host", "127.0.0.1", "--remote-port", "9002"]
 
-        cmd_c2 = ["python", "-u", self.NODE_PATH, "--listen-port", "9002", "--remote-host", "127.0.0.1", "--remote-port", "9001"]
+        cmd_c2 = [sys.executable, "-u", self.NODE_PATH, "--listen-port", "9002", "--remote-host", "127.0.0.1", "--remote-port", "9001"]
 
         # 2. Levantamos la Instancia C1 primero
         print("[Test] Levantando Instancia C1...")

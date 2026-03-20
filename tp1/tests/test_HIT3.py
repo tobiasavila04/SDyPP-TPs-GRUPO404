@@ -1,22 +1,25 @@
 import unittest
 import subprocess
 import time
+import os
+import sys
 
 
 class TestServerRobustness(unittest.TestCase):
-    SERVER_PATH = "../HIT3/server_b.py"
-    CLIENT_PATH = "../HIT3/client_a.py"
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    SERVER_PATH = os.path.join(BASE_DIR, "HIT3", "server_b.py")
+    CLIENT_PATH = os.path.join(BASE_DIR, "HIT3", "client_a.py")
 
     def test_servidor_sobrevive_caida(self):
         print("\n--- Iniciando Test de Robustez del Servidor (HIT 3) ---")
 
         # 1. Iniciar Servidor B (siempre con '-u' para no perder los prints)
-        server_p = subprocess.Popen(["python", "-u", self.SERVER_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        server_p = subprocess.Popen([sys.executable, "-u", self.SERVER_PATH], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
         time.sleep(1)  # Dar tiempo a que abra el puerto
 
         # 2. Iniciar el primer Cliente A
         print("[Test] Conectando el primer Cliente A...")
-        client_1 = subprocess.Popen(["python", "-u", self.CLIENT_PATH], stdout=subprocess.PIPE, text=True)
+        client_1 = subprocess.Popen([sys.executable, "-u", self.CLIENT_PATH], stdout=subprocess.PIPE, text=True)
         time.sleep(2)  # Esperar que salude y se quede en el loop infinito
 
         # 3. Matar el primer Cliente A (simulando corte de red / Ctrl+C)
@@ -29,7 +32,7 @@ class TestServerRobustness(unittest.TestCase):
 
         # 4. Iniciar un segundo Cliente A para comprobar que B sigue trabajando
         print("[Test] Conectando un nuevo Cliente A...")
-        client_2 = subprocess.Popen(["python", "-u", self.CLIENT_PATH], stdout=subprocess.PIPE, text=True)
+        client_2 = subprocess.Popen([sys.executable, "-u", self.CLIENT_PATH], stdout=subprocess.PIPE, text=True)
         time.sleep(2)  # Dar tiempo a que haga el saludo
 
         # Limpieza general de los procesos que quedaron corriendo
