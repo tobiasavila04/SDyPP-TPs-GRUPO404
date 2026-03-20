@@ -31,7 +31,7 @@ jobs:
         run: ruff format --check . --line-length 150
 
       - name: Run tests
-        run: pytest tests/ -v --tb=short
+        run: pytest tp1/tests/ -v --tb=short
 
   deploy:
     name: Deploy to EC2
