@@ -6,8 +6,10 @@ escuchando nuevas conexiones sin caerse.
 
 import socket
 
+import os
+
 HOST = "0.0.0.0"
-PORT = 9000
+PORT = int(os.getenv("PORT", "9000"))
 
 
 def handle_connection(conn, addr):

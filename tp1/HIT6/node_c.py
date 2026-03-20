@@ -140,16 +140,30 @@ def _get_own_ip() -> str:
         return "127.0.0.1"
 
 
+EC2_HOST = "3.144.148.19"
+EC2_PORT = 5005   # puerto TCP del registro en EC2
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Nodo C con registro en D (HIT #6)")
-    parser.add_argument("--registry-host", required=True, help="IP del nodo D")
-    parser.add_argument("--registry-port", type=int, required=True, help="Puerto TCP de D")
-    parser.add_argument(
-        "--own-host",
-        default=None,
-        help="IP propia visible por D (auto-detectada si no se indica)",
-    )
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--local", action="store_true", help=f"Registro en 127.0.0.1:{EC2_PORT}")
+    group.add_argument("--remote", action="store_true", help=f"Registro en EC2 ({EC2_HOST}:{EC2_PORT})")
+
+    parser.add_argument("--registry-host", default=None, help="IP del nodo D (manual)")
+    parser.add_argument("--registry-port", type=int, default=None, help="Puerto TCP de D (manual)")
+    parser.add_argument("--own-host", default=None, help="IP propia visible por D (auto-detectada si no se indica)")
     args = parser.parse_args()
+
+    if args.local:
+        args.registry_host = "127.0.0.1"
+        args.registry_port = EC2_PORT
+    elif args.remote:
+        args.registry_host = EC2_HOST
+        args.registry_port = EC2_PORT
+    elif args.registry_host is None or args.registry_port is None:
+        parser.error("Especificá --local, --remote, o bien --registry-host y --registry-port manualmente.")
 
     own_host = args.own_host or _get_own_ip()
 

@@ -1,0 +1,19 @@
+[Unit]
+Description=HIT#7 - Nodo D: Sistema de Inscripciones con Ventanas (TCP 5006, HTTP interno 8087)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/SD2026-GRUPO404/tp1
+Environment=TCP_PORT=5006
+ExecStart=/home/ubuntu/SD2026-GRUPO404/.venv/bin/uvicorn HIT7.node_d:app \
+    --host 0.0.0.0 \
+    --port 8087
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

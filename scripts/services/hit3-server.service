@@ -1,0 +1,17 @@
+[Unit]
+Description=HIT#3 - Servidor TCP B robusto (puerto 5002)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/SD2026-GRUPO404
+Environment=PORT=5002
+ExecStart=/home/ubuntu/SD2026-GRUPO404/.venv/bin/python tp1/HIT3/server_b.py
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

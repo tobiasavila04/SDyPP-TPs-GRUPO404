@@ -29,16 +29,24 @@ Instancia C1                               Instancia C2
 
 Requiere Python 3.x (sin dependencias externas, solo stdlib).
 
-### Terminal 1 — Instancia C1
+### Local (ambas instancias en la misma máquina)
 
 ```bash
+# Terminal 1 — C1
 python3 tp1/HIT4/node_c.py --listen-port 9001 --remote-host 127.0.0.1 --remote-port 9002
+
+# Terminal 2 — C2
+python3 tp1/HIT4/node_c.py --listen-port 9002 --remote-host 127.0.0.1 --remote-port 9001
 ```
 
-### Terminal 2 — Instancia C2
+También con `--local` (usa el mismo puerto que EC2):
 
 ```bash
-python3 tp1/HIT4/node_c.py --listen-port 9002 --remote-host 127.0.0.1 --remote-port 9001
+# Terminal 1 — C1 local
+python3 tp1/HIT4/node_c.py --local --listen-port 5004   # conecta a 127.0.0.1:5003
+
+# Terminal 2 — C2 local
+python3 tp1/HIT4/node_c.py --listen-port 5003 --remote-host 127.0.0.1 --remote-port 5004
 ```
 
 Las dos instancias se pueden iniciar en cualquier orden. El thread cliente reintenta
@@ -70,3 +78,29 @@ cada 2 segundos hasta que el par esté disponible.
   futuros saludos.
 - **`argparse`**: los parámetros se pasan por línea de comandos para poder levantar
   múltiples instancias con distintas configuraciones sin tocar el código.
+
+## Deploy en EC2
+
+En EC2 corren dos instancias del nodo como servicios systemd:
+
+| Servicio | Puerto | Conecta a |
+|----------|--------|-----------|
+| `hit4-node-c1` | TCP **5003** | localhost:5004 |
+| `hit4-node-c2` | TCP **5004** | localhost:5003 |
+
+```bash
+# Ver logs
+ssh -i clave-grupo404.pem ubuntu@3.144.148.19 "journalctl -fu hit4-node-c1"
+```
+
+### Flags del cliente
+
+| Flag | Efecto |
+|------|--------|
+| `--local` | `--remote-host 127.0.0.1 --remote-port 5003` |
+| `--remote` | `--remote-host 3.144.148.19 --remote-port 5003` |
+
+```bash
+# Conectar al nodo C1 de EC2 desde local
+python3 tp1/HIT4/node_c.py --remote --listen-port 9099
+```

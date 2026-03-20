@@ -117,13 +117,40 @@ def client_thread(remote_host: str, remote_port: int, own_port: int) -> None:
 # ---------------------------------------------------------------------------
 
 
+EC2_HOST = "3.144.148.19"
+EC2_PORT = 5004   # puerto donde escucha el nodo C en EC2
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Nodo C con mensajes JSON (HIT #5)")
+    parser = argparse.ArgumentParser(
+        description="Nodo C con mensajes JSON (HIT #5)",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Ejemplos:\n"
+            "  --local  --listen-port 5003          # prueba local: este nodo en 5003, par en 127.0.0.1:5004\n"
+            "  --remote --listen-port 5003          # conecta al nodo C en EC2 (3.144.148.19:5004)\n"
+            "  --remote-host 1.2.3.4 --remote-port 5004 --listen-port 5003  # manual"
+        ),
+    )
     parser.add_argument("--listen-host", default="0.0.0.0")
     parser.add_argument("--listen-port", type=int, required=True)
-    parser.add_argument("--remote-host", required=True)
-    parser.add_argument("--remote-port", type=int, required=True)
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--local", action="store_true", help=f"Par en 127.0.0.1:{EC2_PORT}")
+    group.add_argument("--remote", action="store_true", help=f"Par en EC2 ({EC2_HOST}:{EC2_PORT})")
+
+    parser.add_argument("--remote-host", default=None)
+    parser.add_argument("--remote-port", type=int, default=None)
     args = parser.parse_args()
+
+    if args.local:
+        args.remote_host = "127.0.0.1"
+        args.remote_port = EC2_PORT
+    elif args.remote:
+        args.remote_host = EC2_HOST
+        args.remote_port = EC2_PORT
+    elif args.remote_host is None or args.remote_port is None:
+        parser.error("Especificá --local, --remote, o bien --remote-host y --remote-port manualmente.")
 
     threading.Thread(
         target=server_thread,

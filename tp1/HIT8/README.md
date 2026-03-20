@@ -77,10 +77,10 @@ Node D arranca el servidor gRPC en el puerto 50051 automáticamente.
 ### 2. Iniciar instancias de Node C
 
 ```bash
-# C1
-python3 tp1/HIT8/node_c.py --registry-host 127.0.0.1 --registry-grpc-port 50051
+# Con --local (127.0.0.1:5007, mismo puerto que EC2)
+python3 tp1/HIT8/node_c.py --local
 
-# C2 (en otra terminal)
+# O especificando manualmente
 python3 tp1/HIT8/node_c.py --registry-host 127.0.0.1 --registry-grpc-port 50051
 ```
 
@@ -90,6 +90,34 @@ python3 tp1/HIT8/node_c.py --registry-host 127.0.0.1 --registry-grpc-port 50051
 curl http://localhost:8080/health
 curl http://localhost:8080/nodes
 ```
+
+## Deploy en EC2
+
+Node D corre como servicio systemd `hit8-node-d`.
+
+| Componente | Puerto |
+|-----------|--------|
+| gRPC registro (node_c conecta aquí) | **5007** |
+| HTTP FastAPI (interno) | 8088 |
+
+```bash
+# Ver logs
+ssh -i clave-grupo404.pem ubuntu@3.144.148.19 "journalctl -fu hit8-node-d"
+```
+
+### Registrar un nodo C contra EC2
+
+```bash
+python3 tp1/HIT8/node_c.py --remote
+```
+
+### Flags del cliente
+
+| Flag | Host registro | Puerto gRPC | Cuándo usar |
+|------|--------------|-------------|-------------|
+| `--local` | 127.0.0.1 | 5007 | Node D corriendo localmente |
+| `--remote` | 3.144.148.19 | 5007 | Node D en EC2 |
+| `--registry-host X --registry-grpc-port Y` | manual | manual | Cualquier otro destino |
 
 ## Comparación JSON (HIT #5) vs Protobuf (HIT #8)
 

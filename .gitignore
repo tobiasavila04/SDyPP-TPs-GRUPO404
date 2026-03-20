@@ -19,3 +19,8 @@ build/
 
 # macOS
 .DS_Store
+
+*.pem
+
+# HIT7 — archivo de persistencia de ventanas
+inscripciones.json

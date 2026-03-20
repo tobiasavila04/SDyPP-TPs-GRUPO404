@@ -51,30 +51,19 @@ Introduce un nuevo tipo de nodo: **D**, que actúa como registro de contactos.
 }
 ```
 
-## Cómo ejecutar localmente
+## Cómo ejecutar
 
-### 1. Iniciar Node D
+### Local
 
 ```bash
+# Terminal 1 — Node D
 uvicorn tp1.HIT6.node_d:app --host 0.0.0.0 --port 8080
+
+# Terminales 2, 3, 4 — instancias de Node C
+python3 tp1/HIT6/node_c.py --local    # conecta a 127.0.0.1:5005
 ```
 
-### 2. Iniciar instancias de Node C (una por terminal)
-
-```bash
-# C1
-python3 tp1/HIT6/node_c.py --registry-host 127.0.0.1 --registry-port 9000
-
-# C2 (en otra terminal)
-python3 tp1/HIT6/node_c.py --registry-host 127.0.0.1 --registry-port 9000
-
-# C3 (en otra terminal)
-python3 tp1/HIT6/node_c.py --registry-host 127.0.0.1 --registry-port 9000
-```
-
-Cada nuevo C recibe la lista de los anteriores y los saluda.
-
-### 3. Verificar el estado
+### Verificar el estado local
 
 ```bash
 curl http://localhost:8080/health
@@ -83,36 +72,35 @@ curl http://localhost:8080/nodes
 
 ## Deploy en EC2
 
-Node D es el servicio desplegado en producción. El pipeline de CI/CD
-(`.github/workflows/ci.yml`) hace `git pull` + `pip install` y reinicia
-`api-python.service` en cada push a `main`.
+Node D corre como servicio systemd `hit6-node-d`.
 
-### Configurar el servicio en EC2 (una sola vez)
+| Componente | Puerto |
+|-----------|--------|
+| TCP registro (node_c conecta aquí) | **5005** |
+| HTTP FastAPI (interno) | 8086 |
 
-```bash
-# Copiar el archivo de servicio
-sudo cp /home/ubuntu/SD2026-GRUPO404/tp1/HIT6/api-python.service \
-        /etc/systemd/system/api-python.service
+El pipeline CI/CD (`scripts/deploy.sh`) hace `git pull` + `pip install` y reinicia
+todos los servicios HIT en cada push a `main`.
 
-# Habilitar y arrancar
-sudo systemctl daemon-reload
-sudo systemctl enable api-python.service
-sudo systemctl start api-python.service
-```
-
-Después de eso, cada push a main actualiza el código y reinicia el servicio automáticamente. El endpoint
-público http://3.144.148.19:8080/health pasará a mostrar el estado del nodo D. También hay que abrir el
-puerto TCP 9000 en el Security Group de EC2 para que los nodos C externos puedan registrarse.
-
-### Verificar desde internet
+### Iniciar Node C contra EC2
 
 ```bash
-curl http://3.144.148.19:8080/health
-curl http://3.144.148.19:8080/nodes
+python3 tp1/HIT6/node_c.py --remote
 ```
 
-> **Nota:** El puerto TCP 9000 debe estar abierto en el Security Group de EC2
-> para que los nodos C externos puedan registrarse.
+### Ver logs en EC2
+
+```bash
+ssh -i clave-grupo404.pem ubuntu@3.144.148.19 "journalctl -fu hit6-node-d"
+```
+
+### Flags del cliente
+
+| Flag | Host registro | Puerto | Cuándo usar |
+|------|--------------|--------|-------------|
+| `--local` | 127.0.0.1 | 5005 | Node D corriendo localmente |
+| `--remote` | 3.144.148.19 | 5005 | Node D en EC2 |
+| `--registry-host X --registry-port Y` | manual | manual | Cualquier otro destino |
 
 ## Decisiones de Diseño
 

@@ -65,3 +65,25 @@ normalmente.
 - **`BrokenPipeError` y `ConnectionResetError`**: cubren los dos escenarios principales
   de desconexión abrupta — escritura en socket cerrado y reset por el par remoto,
   respectivamente.
+
+## Deploy en EC2
+
+El servidor corre como servicio systemd en EC2 en el **puerto TCP 5002**.
+
+```bash
+# Ver logs en tiempo real
+ssh -i clave-grupo404.pem ubuntu@3.144.148.19 "journalctl -fu hit3-server"
+```
+
+### Flags del cliente
+
+| Flag | Host | Puerto | Cuándo usar |
+|------|------|--------|-------------|
+| *(ninguno)* | 127.0.0.1 | 9000 | Testing local / retrocompatible |
+| `--local` | 127.0.0.1 | 5002 | Local con el mismo puerto que EC2 |
+| `--remote` | 3.144.148.19 | 5002 | Contra el servidor en EC2 |
+
+```bash
+# Conectar al servidor en EC2 y luego matar el cliente con Ctrl+C para probar robustez
+python3 tp1/HIT3/client_a.py --remote
+```

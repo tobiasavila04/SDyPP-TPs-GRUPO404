@@ -53,3 +53,32 @@ Salida esperada del servidor:
 [B] Respuesta enviada: Hola A, soy B. Saludo recibido!
 [B] Conexion cerrada.
 ```
+
+## Deploy en EC2
+
+El servidor corre como servicio systemd en EC2 en el **puerto TCP 5000**.
+
+```bash
+# Verificar que el servicio está activo
+ssh -i clave-grupo404.pem ubuntu@3.144.148.19 "systemctl status hit1-server"
+
+# Ver logs en tiempo real
+ssh -i clave-grupo404.pem ubuntu@3.144.148.19 "journalctl -fu hit1-server"
+```
+
+### Flags del cliente
+
+| Flag | Host | Puerto | Cuándo usar |
+|------|------|--------|-------------|
+| *(ninguno)* | 127.0.0.1 | 9000 | Testing local / retrocompatible |
+| `--local` | 127.0.0.1 | 5000 | Local con el mismo puerto que EC2 |
+| `--remote` | 3.144.148.19 | 5000 | Contra el servidor en EC2 |
+
+```bash
+# Probar contra EC2 (servidor ya corriendo)
+python3 tp1/HIT1/client_a.py --remote
+
+# Probar local con mismo puerto que EC2
+PORT=5000 python3 tp1/HIT1/server_b.py &
+python3 tp1/HIT1/client_a.py --local
+```

@@ -5,8 +5,10 @@ Espera el saludo del nodo A y responde.
 
 import socket
 
+import os
+
 HOST = "0.0.0.0"
-PORT = 9000
+PORT = int(os.getenv("PORT", "9000"))
 
 
 def main():

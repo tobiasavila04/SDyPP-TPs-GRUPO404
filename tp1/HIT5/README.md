@@ -51,16 +51,21 @@ Instancia C1                                    Instancia C2
 
 Requiere Python 3.x (sin dependencias externas, solo stdlib).
 
-### Terminal 1 — Instancia C1
+### Local (ambas instancias en la misma máquina)
 
 ```bash
+# Terminal 1 — C1
 python3 tp1/HIT5/node_c.py --listen-port 9001 --remote-host 127.0.0.1 --remote-port 9002
+
+# Terminal 2 — C2
+python3 tp1/HIT5/node_c.py --listen-port 9002 --remote-host 127.0.0.1 --remote-port 9001
 ```
 
-### Terminal 2 — Instancia C2
+También con `--local`:
 
 ```bash
-python3 tp1/HIT5/node_c.py --listen-port 9002 --remote-host 127.0.0.1 --remote-port 9001
+python3 tp1/HIT5/node_c.py --local  --listen-port 5004   # conecta a 127.0.0.1:5004
+python3 tp1/HIT5/node_c.py --listen-port 5003 --remote-host 127.0.0.1 --remote-port 5004
 ```
 
 ### Salida esperada (C1)
@@ -87,3 +92,24 @@ python3 tp1/HIT5/node_c.py --listen-port 9002 --remote-host 127.0.0.1 --remote-p
   en distintas zonas horarias y es el formato estándar en sistemas distribuidos.
 - **Campo `type`**: permite extender el protocolo en HITs futuros (ej. mensajes de
   registro, heartbeat) sin romper compatibilidad.
+
+## Deploy en EC2
+
+Igual que HIT4, corren dos instancias en EC2:
+
+| Servicio | Puerto | Conecta a |
+|----------|--------|-----------|
+| `hit5-node-c1` | TCP **5003** | localhost:5004 |
+| `hit5-node-c2` | TCP **5004** | localhost:5003 |
+
+### Flags del cliente
+
+| Flag | Efecto |
+|------|--------|
+| `--local` | `--remote-host 127.0.0.1 --remote-port 5004` |
+| `--remote` | `--remote-host 3.144.148.19 --remote-port 5004` |
+
+```bash
+# Conectar al nodo C1 de EC2 y ver el intercambio JSON
+python3 tp1/HIT5/node_c.py --remote --listen-port 9099
+```

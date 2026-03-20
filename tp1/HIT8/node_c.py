@@ -146,12 +146,30 @@ def _get_own_ip() -> str:
         return "127.0.0.1"
 
 
+EC2_HOST = "3.144.148.19"
+EC2_GRPC_PORT = 5007   # puerto gRPC del registro en EC2
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Nodo C gRPC (HIT #8)")
-    parser.add_argument("--registry-host", required=True)
-    parser.add_argument("--registry-grpc-port", type=int, default=50051)
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--local", action="store_true", help=f"Registro en 127.0.0.1:{EC2_GRPC_PORT}")
+    group.add_argument("--remote", action="store_true", help=f"Registro en EC2 ({EC2_HOST}:{EC2_GRPC_PORT})")
+
+    parser.add_argument("--registry-host", default=None)
+    parser.add_argument("--registry-grpc-port", type=int, default=None)
     parser.add_argument("--own-host", default=None)
     args = parser.parse_args()
+
+    if args.local:
+        args.registry_host = "127.0.0.1"
+        args.registry_grpc_port = EC2_GRPC_PORT
+    elif args.remote:
+        args.registry_host = EC2_HOST
+        args.registry_grpc_port = EC2_GRPC_PORT
+    elif args.registry_host is None or args.registry_grpc_port is None:
+        parser.error("Especificá --local, --remote, o bien --registry-host y --registry-grpc-port manualmente.")
 
     if args.own_host:
         own_host = args.own_host
