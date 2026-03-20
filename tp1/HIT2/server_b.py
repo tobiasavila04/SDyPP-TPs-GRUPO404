@@ -4,9 +4,8 @@ Acepta una conexion, responde el saludo y cierra.
 Puede ser terminado abruptamente para probar la reconexion de A.
 """
 
-import socket
-
 import os
+import socket
 
 HOST = "0.0.0.0"
 PORT = int(os.getenv("PORT", "9000"))

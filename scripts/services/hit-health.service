@@ -1,0 +1,18 @@
+[Unit]
+Description=HIT Health Check — verifica puertos 5000-5007 (HTTP 5010)
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/SD2026-GRUPO404-TP1/tp1
+ExecStart=/home/ubuntu/SD2026-GRUPO404-TP1/.venv/bin/uvicorn health.app:app \
+    --host 0.0.0.0 \
+    --port 5010
+Restart=always
+RestartSec=3
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

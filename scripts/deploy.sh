@@ -19,6 +19,7 @@ SERVICES=(
     hit6-node-d
     hit7-node-d
     hit8-node-d
+    hit-health
 )
 
 echo "==> [1/4] Actualizando código"

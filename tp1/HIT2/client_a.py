@@ -32,10 +32,20 @@ def saludar(sock):
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Nodo A — Cliente TCP con reconexion (HIT #2)")
+    parser = argparse.ArgumentParser(
+        description="Nodo A — Cliente TCP con reconexion (HIT #2)"
+    )
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("--local", action="store_true", help=f"Conectar a {LOCAL_HOST}:{EC2_PORT} (servidor local en puerto EC2)")
-    group.add_argument("--remote", action="store_true", help=f"Conectar a {EC2_HOST}:{EC2_PORT} (servidor en EC2)")
+    group.add_argument(
+        "--local",
+        action="store_true",
+        help=f"Conectar a {LOCAL_HOST}:{EC2_PORT} (servidor local en puerto EC2)",
+    )
+    group.add_argument(
+        "--remote",
+        action="store_true",
+        help=f"Conectar a {EC2_HOST}:{EC2_PORT} (servidor en EC2)",
+    )
     args = parser.parse_args()
 
     if args.remote:
@@ -54,7 +64,12 @@ def main():
                 print("[A] Conexion establecida.")
                 saludar(sock)
                 print("[A] Intercambio completado. Esperando para reconectar...\n")
-        except (ConnectionRefusedError, ConnectionResetError, ConnectionError, OSError) as e:
+        except (
+            ConnectionRefusedError,
+            ConnectionResetError,
+            ConnectionError,
+            OSError,
+        ) as e:
             print(f"[A] Error de conexion: {e}")
             print(f"[A] Reintentando en {RECONNECT_DELAY} segundos...\n")
 

@@ -21,6 +21,7 @@ SERVICES=(
     hit6-node-d
     hit7-node-d
     hit8-node-d
+    hit-health
 )
 
 echo "==> Copiando archivos .service a $SYSTEMD_DIR"
@@ -53,5 +54,6 @@ echo "    HIT5  node-c2   → TCP  5004  (par interno en EC2)"
 echo "    HIT6  node-d    → TCP  5005  (registro) / HTTP 8086 (interno)"
 echo "    HIT7  node-d    → TCP  5006  (registro) / HTTP 8087 (interno)"
 echo "    HIT8  node-d    → gRPC 5007               / HTTP 8088 (interno)"
+echo "    Health check    → HTTP 5010  /health"
 echo ""
 echo "Setup completo."
