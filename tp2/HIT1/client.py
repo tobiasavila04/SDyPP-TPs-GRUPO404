@@ -1,17 +1,29 @@
-import json
 import argparse
-import requests
+import json
 import os
 
-SERVER_URL = os.environ.get("SERVER_URL", "http://localhost:5000/task")
+import requests
+
+REMOTE_URL = "http://3.144.148.19:5000/task"
+LOCAL_URL = "http://localhost:5000/task"
 
 parser = argparse.ArgumentParser(description="ejecuta operaciones matemáticas en el servidor.")
 
-parser.add_argument("--operacion", type=str, required=True, choices=["suma", "resta", "multiplicacion", "division"], help="operación a ejecutar: suma, resta, multiplicacion o division.")
+parser.add_argument(
+    "--operacion",
+    type=str,
+    required=True,
+    choices=["suma", "resta", "multiplicacion", "division"],
+    help="operación a ejecutar: suma, resta, multiplicacion o division.",
+)
 
 parser.add_argument("--valores", type=float, nargs="+", required=True, help="Números sobre los que operar. Ej: --valores 10 25 7")
 
+parser.add_argument("--remote", action="store_true", help="Conectar al servidor remoto en AWS en lugar de localhost.")
+
 args = parser.parse_args()
+
+SERVER_URL = REMOTE_URL if args.remote else os.environ.get("SERVER_URL", LOCAL_URL)
 
 if args.operacion in ("suma", "resta", "multiplicacion", "division") and len(args.valores) < 2:
     print("Error: se requieren al menos 2 valores para realizar la operación.")
