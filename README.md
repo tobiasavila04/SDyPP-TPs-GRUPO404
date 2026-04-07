@@ -9,7 +9,7 @@
 
 - **`informes/`** — Contiene el informe del trabajo práctico en formato PDF.
 
-- **`videos/`** — Contiene los videos demostrativos del repositorio. 
+- **`videos/`** — Contiene los videos demostrativos del repositorio
 
 - **`tp1/`** — Contiene el código fuente, tests y los hits generados durante la ejecución del trabajo práctico.
 
