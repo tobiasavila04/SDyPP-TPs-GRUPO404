@@ -12,7 +12,7 @@ channel.queue_declare(queue='cola_principal', arguments=argumentos)
 def callback(ch, method, properties, body):
     datos = json.loads(body.decode())
     
-    if datos.get("error") == True:
+    if datos.get("error"):
         print(f" [X] ERROR fatal en la tarea {datos['id']}. Rechazando...")
         # ch.basic_nack con requeue=False manda el mensaje a la DLQ
         ch.basic_nack(delivery_tag=method.delivery_tag, requeue=False)
