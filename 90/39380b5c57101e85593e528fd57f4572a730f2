@@ -1,0 +1,23 @@
+tp3/HIT0/patron_3_dlq/consumer_main.py
+  8b6b0643473829a0 15
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "9039380b5c57101e85593e528fd57f4572a730f2",
+  "prompts": {
+    "8b6b0643473829a0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "564b18ae-4323-4713-bc28-652f7ac2b94a",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "RenzRob",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    }
+  }
+}
