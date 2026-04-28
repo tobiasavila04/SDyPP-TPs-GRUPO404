@@ -6,7 +6,7 @@ import os
 print("--- Iniciando Procesamiento Centralizado de Sobel ---")
 
 # Ruta de la imagen (asegurate de tenerla en la misma carpeta)
-nombre_imagen = 'imagen_prueba.jpg'
+nombre_imagen = "imagen_prueba.jpg"
 
 if not os.path.exists(nombre_imagen):
     print(f"Error: No se encontró '{nombre_imagen}'.")
@@ -19,7 +19,7 @@ start_time = time.time()
 imagen = cv2.imread(nombre_imagen, cv2.IMREAD_GRAYSCALE)
 
 # 3. Aplicar el filtro Sobel
-# Calculamos las derivadas en el eje X y en el eje Y. 
+# Calculamos las derivadas en el eje X y en el eje Y.
 # Usamos cv2.CV_64F (float de 64 bits) para no perder datos si los valores son negativos
 sobel_x = cv2.Sobel(imagen, cv2.CV_64F, 1, 0, ksize=3)
 sobel_y = cv2.Sobel(imagen, cv2.CV_64F, 0, 1, ksize=3)
@@ -36,7 +36,7 @@ end_time = time.time()
 tiempo_total = end_time - start_time
 
 # 7. Guardar el resultado
-nombre_salida = 'resultado_sobel.jpg'
+nombre_salida = "resultado_sobel.jpg"
 cv2.imwrite(nombre_salida, sobel_normalizado)
 
 print(f"[V] ¡Proceso terminado con éxito!")
