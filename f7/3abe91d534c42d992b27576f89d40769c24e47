@@ -1,0 +1,117 @@
+tp3/HIT0/k8s/patron_3/consumer-main-deployment.yaml
+  5559d05368d183ba 1-24
+tp3/tests/test_fault_tolerance.py
+  5559d05368d183ba 1-61
+tp3/HIT0/patron_2_pubsub/subscriber.py
+  5559d05368d183ba 2,4-5
+tp3/HIT0/patron_2_pubsub/publisher.py
+  5559d05368d183ba 4,6-7
+tp3/HIT0/patron_5_discussion/README.md
+  5559d05368d183ba 1-89
+tp3/HIT0/k8s/patron_1/producer-job.yaml
+  5559d05368d183ba 1-17
+tp3/HIT0/patron_3_dlq/consumer_dlq.py
+  5559d05368d183ba 2,4-5
+tp3/HIT1/parte_2_distribuido/k8s/worker-deployment.yaml
+  5559d05368d183ba 1-37
+tp3/tests/test_retry_backoff.py
+  5559d05368d183ba 1-50
+tp3/HIT0/k8s/rabbitmq.yaml
+  5559d05368d183ba 1-42
+tp3/HIT0/k8s/patron_1/consumer-deployment.yaml
+  5559d05368d183ba 1-24
+tp3/HIT0/patron_1_queue/producer.py
+  5559d05368d183ba 3,5-6
+tp3/tests/test_sobel.py
+  5559d05368d183ba 1-63
+tp3/HIT0/k8s/patron_3/producer-job.yaml
+  5559d05368d183ba 1-17
+tp3/HIT1/parte_2_distribuido/k8s/rabbitmq.yaml
+  5559d05368d183ba 1-42
+tp3/HIT0/patron_1_queue/consumer.py
+  5559d05368d183ba 3,5-6
+tp3/HIT0/k8s/patron_2/publisher-job.yaml
+  5559d05368d183ba 1-17
+tp3/HIT0/patron_3_dlq/consumer_main.py
+  5559d05368d183ba 4,6-7
+tp3/HIT0/k8s/patron_4/producer-job.yaml
+  5559d05368d183ba 1-17
+tp3/HIT0/patron_2_pubsub/Dockerfile
+  5559d05368d183ba 1-4
+tp3/HIT0/patron_1_queue/Dockerfile
+  5559d05368d183ba 1-4
+tp3/HIT0/k8s/patron_2/subscriber-deployment.yaml
+  5559d05368d183ba 1-24
+tp3/HIT1/parte_3_fault_tolerant/k8s/rabbitmq.yaml
+  5559d05368d183ba 1-47
+tp3/HIT1/parte_2_distribuido/k8s/joiner-job.yaml
+  5559d05368d183ba 1-16
+tp3/HIT1/parte_3_fault_tolerant/worker/worker.py
+  5559d05368d183ba 1-101
+tp3/HIT0/k8s/patron_3/consumer-dlq-deployment.yaml
+  5559d05368d183ba 1-24
+tp3/HIT1/parte_3_fault_tolerant/Dockerfile
+  5559d05368d183ba 1-9
+tp3/HIT1/parte_3_fault_tolerant/worker/Dockerfile
+  5559d05368d183ba 1-6
+tp3/HIT1/parte_2_distribuido/Dockerfile.splitter
+  5559d05368d183ba 1-9
+tp3/HIT1/parte_3_fault_tolerant/worker/requirements.txt
+  5559d05368d183ba 1-3
+tp3/HIT1/parte_3_fault_tolerant/requirements.txt
+  5559d05368d183ba 1-3
+tp3/HIT0/k8s/patron_4/consumer-retry-deployment.yaml
+  5559d05368d183ba 1-24
+tp3/HIT1/parte_2_distribuido/splitter.py
+  5559d05368d183ba 1-5,10-12,21,33
+tp3/HIT1/parte_2_distribuido/Dockerfile.joiner
+  5559d05368d183ba 1-6
+.github/workflows/ci.yml
+  5559d05368d183ba 95-172,176
+tp3/HIT0/patron_3_dlq/producer.py
+  5559d05368d183ba 4,6-7
+tp3/HIT1/parte_2_distribuido/worker/worker.py
+  5559d05368d183ba 2-6,9-28,35-36
+tp3/HIT1/parte_3_fault_tolerant/README.md
+  5559d05368d183ba 1-171
+tp3/HIT1/parte_3_fault_tolerant/k8s/worker-deployment.yaml
+  5559d05368d183ba 1-43
+tp3/HIT0/patron_4_retry/Dockerfile
+  5559d05368d183ba 1-4
+tp3/requirements-test.txt
+  5559d05368d183ba 1-6
+tp3/HIT1/parte_3_fault_tolerant/master.py
+  5559d05368d183ba 1-186
+tp3/HIT1/parte_3_fault_tolerant/k8s/master-job.yaml
+  5559d05368d183ba 1-20
+tp3/HIT0/patron_3_dlq/Dockerfile
+  5559d05368d183ba 1-4
+tp3/HIT0/patron_4_retry/producer.py
+  5559d05368d183ba 2,4-5
+tp3/HIT1/parte_2_distribuido/k8s/splitter-job.yaml
+  5559d05368d183ba 1-16
+tp3/HIT1/parte_2_distribuido/joiner.py
+  5559d05368d183ba 2-5,8-11,15,43,46
+tp3/HIT0/patron_4_retry/consumer_retry.py
+  5559d05368d183ba 3,5-6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "f73abe91d534c42d992b27576f89d40769c24e47",
+  "prompts": {
+    "5559d05368d183ba": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f464657c-35f9-423e-a2dd-8951cfe801b5",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "RenzRob",
+      "messages": [],
+      "total_additions": 1393,
+      "total_deletions": 42,
+      "accepted_lines": 1384,
+      "overriden_lines": 0
+    }
+  }
+}
