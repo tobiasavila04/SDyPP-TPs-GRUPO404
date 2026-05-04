@@ -20,7 +20,7 @@ if not os.path.exists(nombre_imagen):
 # 1. Conectamos a RabbitMQ
 connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
-channel.queue_declare(queue="tareas_sobel")
+channel.queue_declare(queue="tareas_sobel", durable=True)
 
 # 2. Leemos la imagen en grises
 imagen = cv2.imread(nombre_imagen, cv2.IMREAD_GRAYSCALE)

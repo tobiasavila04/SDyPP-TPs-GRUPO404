@@ -14,7 +14,7 @@ print("--- Iniciando Joiner ---")
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
-channel.queue_declare(queue="resultados_sobel")
+channel.queue_declare(queue="resultados_sobel", durable=True)
 
 pedazos_recibidos = {}
 tiempo_inicio = None  # <-- Variable para nuestro cronómetro

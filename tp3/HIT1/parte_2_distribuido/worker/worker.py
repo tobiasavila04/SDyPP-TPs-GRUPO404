@@ -38,8 +38,8 @@ try:
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
     channel = connection.channel()
 
-    channel.queue_declare(queue="tareas_sobel")
-    channel.queue_declare(queue="resultados_sobel")
+    channel.queue_declare(queue="tareas_sobel", durable=True)
+    channel.queue_declare(queue="resultados_sobel", durable=True)
 except Exception as e:
     print(f" [X] Error conectando a RabbitMQ: {e}")
     exit(1)
