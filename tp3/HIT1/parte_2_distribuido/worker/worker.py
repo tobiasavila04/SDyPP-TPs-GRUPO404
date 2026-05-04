@@ -1,14 +1,38 @@
-import pika
-import json
 import base64
+import json
+import os
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+
 import cv2
 import numpy as np
-import os
+import pika
+
+def _start_health_server(port=8080):
+    class _Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            if self.path == "/health":
+                body = json.dumps({"service": "sobel-worker", "status": "ok"}).encode()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(body)
+            else:
+                self.send_response(404)
+                self.end_headers()
+
+        def log_message(self, *args):
+            pass
+
+    threading.Thread(target=HTTPServer(("0.0.0.0", port), _Handler).serve_forever, daemon=True).start()
+
 
 print(" [*] Iniciando Worker Sobel en Docker...")
 
 # Buscamos RabbitMQ (por defecto usa host.docker.internal para llegar a tu compu)
 RABBIT_HOST = os.getenv("RABBIT_HOST", "host.docker.internal")
+
+_start_health_server()
 
 try:
     connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlq-consumer-deadletter
+  labels:
+    app: dlq-consumer-deadletter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dlq-consumer-deadletter
+  template:
+    metadata:
+      labels:
+        app: dlq-consumer-deadletter
+    spec:
+      containers:
+        - name: dlq-consumer-deadletter
+          image: rabbitmq-patron3:latest
+          imagePullPolicy: Never
+          command: ["python", "consumer_dlq.py"]
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"

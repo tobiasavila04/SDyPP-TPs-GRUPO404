@@ -1,7 +1,8 @@
 import pika
+import os
 
-# Conexión a RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+RABBIT_HOST = os.getenv("RABBIT_HOST", "localhost")
+connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
 
 # Declaramos el MISMO exchange por si el subscriber arranca primero

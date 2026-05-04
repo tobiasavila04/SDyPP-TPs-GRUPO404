@@ -1,7 +1,9 @@
 import pika
 import random
+import os
 
-connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+RABBIT_HOST = os.getenv("RABBIT_HOST", "localhost")
+connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
 
 # 1. Cola principal y Cola de muertos (DLQ)

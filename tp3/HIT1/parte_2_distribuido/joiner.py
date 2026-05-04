@@ -1,13 +1,18 @@
-import pika
-import json
 import base64
+import json
+import os
+import time
+
 import cv2
 import numpy as np
-import time
+import pika
+
+RABBIT_HOST = os.getenv("RABBIT_HOST", "localhost")
+CANTIDAD_CHUNKS = int(os.getenv("CANTIDAD_CHUNKS", "4"))
 
 print("--- Iniciando Joiner ---")
 
-connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
 channel.queue_declare(queue="resultados_sobel")
 
@@ -35,10 +40,10 @@ def callback(ch, method, properties, body):
     pedazos_recibidos[chunk_id] = pedazo
     ch.basic_ack(delivery_tag=method.delivery_tag)
 
-    if len(pedazos_recibidos) == 4:
+    if len(pedazos_recibidos) == CANTIDAD_CHUNKS:
         print("\n [*] ¡Todos los pedazos recibidos! Unificando...")
 
-        pedazos_ordenados = [pedazos_recibidos[i] for i in range(4)]
+        pedazos_ordenados = [pedazos_recibidos[i] for i in range(CANTIDAD_CHUNKS)]
         imagen_final = np.vstack(pedazos_ordenados)
 
         # Paramos el reloj justo después de pegar la imagen

@@ -1,9 +1,10 @@
 import pika
 import time
 import random
+import os
 
-# Conexión a RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+RABBIT_HOST = os.getenv("RABBIT_HOST", "localhost")
+connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
 
 # Declaramos un Exchange de tipo 'fanout' (transmisión a todos)

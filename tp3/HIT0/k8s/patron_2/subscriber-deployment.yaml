@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pubsub-subscriber
+  labels:
+    app: pubsub-subscriber
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: pubsub-subscriber
+  template:
+    metadata:
+      labels:
+        app: pubsub-subscriber
+    spec:
+      containers:
+        - name: pubsub-subscriber
+          image: rabbitmq-patron2:latest
+          imagePullPolicy: Never
+          command: ["python", "subscriber.py"]
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"

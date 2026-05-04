@@ -1,8 +1,10 @@
 import pika
 import json
 import time
+import os
 
-connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+RABBIT_HOST = os.getenv("RABBIT_HOST", "localhost")
+connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
 
 # Volvemos a declarar la cola principal por las dudas

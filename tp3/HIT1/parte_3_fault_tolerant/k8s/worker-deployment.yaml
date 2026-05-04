@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sobel-worker-ft
+  labels:
+    app: sobel-worker-ft
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sobel-worker-ft
+  template:
+    metadata:
+      labels:
+        app: sobel-worker-ft
+    spec:
+      containers:
+        - name: sobel-worker-ft
+          image: sobel-worker-ft:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8080
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"
+            - name: WORKER_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: SIMULATE_SLOW
+              value: "0"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10

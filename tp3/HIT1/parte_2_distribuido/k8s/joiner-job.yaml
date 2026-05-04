@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sobel-joiner
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sobel-joiner
+          image: sobel-joiner:latest
+          imagePullPolicy: Never
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlq-consumer-main
+  labels:
+    app: dlq-consumer-main
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dlq-consumer-main
+  template:
+    metadata:
+      labels:
+        app: dlq-consumer-main
+    spec:
+      containers:
+        - name: dlq-consumer-main
+          image: rabbitmq-patron3:latest
+          imagePullPolicy: Never
+          command: ["python", "consumer_main.py"]
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"

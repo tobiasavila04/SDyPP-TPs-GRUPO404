@@ -92,10 +92,88 @@ jobs:
       - name: Build HIT3 images
         run: docker compose -f tp2/HIT3/docker-compose.yml build
 
+  lint-tp3:
+    name: Lint TP3
+    runs-on: ubuntu-latest
+    needs: secret-scan
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install ruff
+        run: pip install ruff>=0.4.0
+
+      - name: Lint (ruff check)
+        run: ruff check tp3/ --line-length 150
+
+      - name: Format check (ruff format)
+        run: ruff format --check tp3/ --line-length 150
+
+  test-tp3:
+    name: Run Tests (TP3)
+    runs-on: ubuntu-latest
+    needs: secret-scan
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install TP3 dependencies
+        run: pip install -r tp3/requirements-test.txt
+
+      - name: Run TP3 tests with coverage
+        run: pytest tp3/tests/ -v --tb=short --cov=tp3 --cov-report=xml --cov-report=term-missing
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: tp3-coverage
+          path: coverage.xml
+
+  build-tp3:
+    name: Build Docker Images (TP3)
+    runs-on: ubuntu-latest
+    needs: [secret-scan, lint-tp3, test-tp3]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build Stage 2 worker image
+        run: docker build -t sobel-worker tp3/HIT1/parte_2_distribuido/worker/
+
+      - name: Build Stage 3 worker image
+        run: docker build -t sobel-worker-ft tp3/HIT1/parte_3_fault_tolerant/worker/
+
+      - name: Build HIT0 patron 1 image
+        run: docker build -t rabbitmq-patron1 tp3/HIT0/patron_1_queue/
+
+      - name: Build HIT0 patron 2 image
+        run: docker build -t rabbitmq-patron2 tp3/HIT0/patron_2_pubsub/
+
+      - name: Build HIT0 patron 3 image
+        run: docker build -t rabbitmq-patron3 tp3/HIT0/patron_3_dlq/
+
+      - name: Build HIT0 patron 4 image
+        run: docker build -t rabbitmq-patron4 tp3/HIT0/patron_4_retry/
+
   deploy:
     name: Deploy to EC2
     runs-on: ubuntu-latest
-    needs: [secret-scan, test, lint-tp2, build-tp2]
+    needs: [secret-scan, test, lint-tp2, build-tp2, test-tp3, build-tp3]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:

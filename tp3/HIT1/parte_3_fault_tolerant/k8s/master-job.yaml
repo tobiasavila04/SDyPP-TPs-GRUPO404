@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: sobel-master-ft
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sobel-master-ft
+          image: sobel-master-ft:latest
+          imagePullPolicy: Never
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"
+            - name: CANTIDAD_CHUNKS
+              value: "4"
+            - name: TIMEOUT_SEGUNDOS
+              value: "15"

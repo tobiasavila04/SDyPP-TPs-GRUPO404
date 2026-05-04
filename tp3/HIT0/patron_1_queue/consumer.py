@@ -1,8 +1,9 @@
 import pika
 import time
+import os
 
-# Nos conectamos al servidor RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+RABBIT_HOST = os.getenv("RABBIT_HOST", "localhost")
+connection = pika.BlockingConnection(pika.ConnectionParameters(RABBIT_HOST))
 channel = connection.channel()
 
 # Declaramos la cola de nuevo. Esto es una buena práctica por si

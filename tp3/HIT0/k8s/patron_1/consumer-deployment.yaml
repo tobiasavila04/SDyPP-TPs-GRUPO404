@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: queue-consumer
+  labels:
+    app: queue-consumer
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: queue-consumer
+  template:
+    metadata:
+      labels:
+        app: queue-consumer
+    spec:
+      containers:
+        - name: queue-consumer
+          image: rabbitmq-patron1:latest
+          imagePullPolicy: Never
+          command: ["python", "consumer.py"]
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"

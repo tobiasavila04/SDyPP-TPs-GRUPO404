@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retry-consumer
+  labels:
+    app: retry-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: retry-consumer
+  template:
+    metadata:
+      labels:
+        app: retry-consumer
+    spec:
+      containers:
+        - name: retry-consumer
+          image: rabbitmq-patron4:latest
+          imagePullPolicy: Never
+          command: ["python", "consumer_retry.py"]
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"

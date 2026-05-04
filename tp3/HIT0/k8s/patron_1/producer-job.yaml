@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: queue-producer
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: queue-producer
+          image: rabbitmq-patron1:latest
+          imagePullPolicy: Never
+          command: ["python", "producer.py"]
+          env:
+            - name: RABBIT_HOST
+              value: "rabbitmq-service"
