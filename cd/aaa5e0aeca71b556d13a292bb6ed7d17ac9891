@@ -1,0 +1,25 @@
+tp3/HIT1/parte_2_distribuido/DEPLOY.md
+  d604fe92eb5dd9cb 1-110
+tp3/HIT1/parte_2_distribuido/k8s/worker-deployment.yaml
+  d604fe92eb5dd9cb 26-27
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "cdaaa5e0aeca71b556d13a292bb6ed7d17ac9891",
+  "prompts": {
+    "d604fe92eb5dd9cb": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "38b63f07-3d9c-4bb7-9d8d-fa1f14b6cb1f",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "RenzRob",
+      "messages": [],
+      "total_additions": 168,
+      "total_deletions": 56,
+      "accepted_lines": 112,
+      "overriden_lines": 0
+    }
+  }
+}
