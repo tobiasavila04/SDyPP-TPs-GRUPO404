@@ -25,8 +25,9 @@ def callback(ch, method, properties, body):
 
     print(f" \n--- Procesando '{tarea}' (Intento {intentos_actuales + 1}) ---")
 
-    # Simulamos un 50% de probabilidad de fallo
-    fallo_simulado = random.random() < 0.5
+    # Simulamos un 100% de probabilidad de fallo
+    fallo_simulado = random.random() < 1.0
+
 
     if fallo_simulado:
         print(" [X] Error al procesar la tarea.")
