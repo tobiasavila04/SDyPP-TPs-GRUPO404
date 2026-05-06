@@ -1,9 +1,0 @@
-FROM python:3.11-slim
-WORKDIR /app
-COPY worker/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
-COPY splitter.py .
-# imagen_prueba.jpg debe estar en el directorio antes del build:
-# cp imagen_prueba.jpg .
-COPY imagen_prueba.jpg .
-CMD ["python", "splitter.py"]

@@ -23,6 +23,8 @@ spec:
           env:
             - name: RABBIT_HOST
               value: "rabbitmq-service"
+            - name: PYTHONUNBUFFERED
+              value: "1"
           livenessProbe:
             httpGet:
               path: /health
