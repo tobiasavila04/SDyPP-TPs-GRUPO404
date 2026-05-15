@@ -1,0 +1,36 @@
+tp4/hit6.md
+  s_89b59af0ee5b45::t_9a67e92d651fda 58
+  s_89b59af0ee5b45::t_3fd9c78fbcf85e 1-57,59-73
+tp4/hit5.md
+  s_89b59af0ee5b45::t_c5d8158fb95f77 1-59,61-76
+  s_89b59af0ee5b45::t_ebcca7a56044dc 60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.4.8",
+  "base_commit_sha": "f1844af27aea8142794e8216a6f9ddc7215af36b",
+  "prompts": {
+    "288fd32a8c8c4860": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b291f91c-e662-4bd8-b28b-1b9faf3fdd3b",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "RenzRob <renzomartinrobles99@gmail.com>",
+      "total_additions": 351,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  },
+  "sessions": {
+    "s_89b59af0ee5b45": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e8ecbf94-db7b-43f5-a042-5cd1eea5645b",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "RenzRob <renzomartinrobles99@gmail.com>"
+    }
+  }
+}
