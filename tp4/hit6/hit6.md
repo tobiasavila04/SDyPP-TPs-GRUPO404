@@ -55,7 +55,7 @@ La imagen también queda en escala de grises, pero los verdes se ven más oscuro
 
 ### Captura
 
-![alt text](screenshoots/hit6.png)
+![alt text](../screenshots/hit6.png)
 
 ## Relación con CUDA
 

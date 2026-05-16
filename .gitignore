@@ -24,3 +24,24 @@ build/
 
 # HIT7 — archivo de persistencia de ventanas
 inscripciones.json
+
+# Secrets / Credenciales
+*.key
+*.cert
+credentials.json
+service-account.json
+*.p12
+*.jks
+
+# Gitleaks report
+gitleaks-report.json
+gitleaks-report.sarif
+
+# IDE / Editor
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db

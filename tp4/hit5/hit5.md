@@ -57,7 +57,7 @@ Quedó en `0.45` porque saca el fondo sin tocar al sujeto.
 
 ### Captura
 
-![alt text](screenshoots/hit5.png)
+![alt text](../screenshots/hit5.png)
 
 ## Limitaciones
 

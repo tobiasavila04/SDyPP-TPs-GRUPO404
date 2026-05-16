@@ -17,7 +17,7 @@ glslvoid mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 El eje X no se toca (uv.x queda igual), por lo que la imagen conserva su orientación horizontal. Solo el eje Y se invierte: la fila de píxeles que antes correspondía a y=0 (abajo) ahora se muestra arriba, y la que correspondía a y=1 (arriba) se muestra abajo.
 Captura de pantalla
 
-![alt text](screenshoots/hit4-flipY.png)
+![alt text](../screenshots/hit4-flipY.png)
 
 
 Flip-X (volteo horizontal / espejo)
@@ -34,7 +34,7 @@ glslvoid mainImage( out vec4 fragColor, in vec2 fragCoord ) {
 El píxel de la columna más a la izquierda (uv.x = 0.0) ahora lee desde el extremo derecho de la textura (uv.x = 1.0), y viceversa. El resultado es una imagen en espejo — el efecto típico de una cámara "selfie". El eje Y no se toca.
 Captura de pantalla
 
-![alt text](screenshoots/hit4-flipX.png)
+![alt text](../screenshots/hit4-flipX.png)
 
 
 Flip-X + Flip-Y simultáneo

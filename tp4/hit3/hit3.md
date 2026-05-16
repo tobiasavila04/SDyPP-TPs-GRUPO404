@@ -14,4 +14,4 @@ fragColor = texture(iChannel0, uv);
 La función texture() de GLSL toma un sampler y unas coordenadas UV y devuelve el color del texel correspondiente en esa posición. El resultado se escribe directamente como color de salida del fragmento.
 El efecto es una copia 1:1 del canal de entrada a la pantalla: sin transformación, sin filtro.
 
-![alt text](screenshoots/hit3.png)
+![alt text](../screenshots/hit3.png)
