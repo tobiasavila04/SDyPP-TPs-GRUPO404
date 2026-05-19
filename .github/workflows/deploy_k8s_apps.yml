@@ -1,0 +1,60 @@
+name: 'Pipeline 1.1 y 1.2 - Deploy K8s Apps'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'tp3/HIT3/k8s/**'
+      - 'tp3/HIT3/app/**'
+
+jobs:
+  build-and-deploy:
+    name: 'Build Docker Image & Deploy to GKE'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./tp3/HIT3/app
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sobel-app:latest
+
+      - name: Auth to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: sobel-cluster
+          location: us-central1-a
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Deploy to K8s
+        run: |
+          # 1.1 Infraestructura
+          kubectl apply -f tp3/HIT3/k8s/rabbitmq.yaml
+          kubectl apply -f tp3/HIT3/k8s/redis.yaml
+          
+          # Esperar a que RabbitMQ inicie antes de lanzar las apps
+          kubectl rollout status statefulset/rabbitmq -n default
+          
+          # 1.2 Aplicaciones
+          kubectl apply -f tp3/HIT3/k8s/joiner.yaml
+          kubectl apply -f tp3/HIT3/k8s/dlq-monitor.yaml
+          
+          # El splitter se corre como Job, si se cambia la imagen hay que recrearlo
+          kubectl delete job splitter-job --ignore-not-found
+          kubectl apply -f tp3/HIT3/k8s/splitter.yaml

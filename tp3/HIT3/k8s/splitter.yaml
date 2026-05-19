@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: splitter-job
+spec:
+  template:
+    metadata:
+      labels:
+        app: splitter
+    spec:
+      nodeSelector:
+        role: apps
+      restartPolicy: Never
+      containers:
+      - name: splitter
+        image: tu-usuario-dockerhub/sobel-app:latest
+        command: ["python", "splitter.py"]
+        env:
+        - name: RABBIT_HOST
+          value: "rabbitmq"
+        - name: CANTIDAD_CHUNKS
+          value: "4"

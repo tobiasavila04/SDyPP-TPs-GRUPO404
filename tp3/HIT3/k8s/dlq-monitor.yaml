@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dlq-monitor
+  labels:
+    app: dlq-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dlq-monitor
+  template:
+    metadata:
+      labels:
+        app: dlq-monitor
+    spec:
+      nodeSelector:
+        role: apps
+      containers:
+      - name: dlq-monitor
+        image: tu-usuario-dockerhub/sobel-app:latest
+        command: ["python", "dlq_monitor.py"]
+        env:
+        - name: RABBIT_HOST
+          value: "rabbitmq"

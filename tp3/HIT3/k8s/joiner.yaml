@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: joiner
+  labels:
+    app: joiner
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: joiner
+  template:
+    metadata:
+      labels:
+        app: joiner
+    spec:
+      nodeSelector:
+        role: apps
+      containers:
+      - name: joiner
+        image: tu-usuario-dockerhub/sobel-app:latest
+        command: ["python", "joiner.py"]
+        env:
+        - name: RABBIT_HOST
+          value: "rabbitmq"
+        - name: CANTIDAD_CHUNKS
+          value: "4"

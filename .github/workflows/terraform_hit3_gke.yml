@@ -1,0 +1,42 @@
+name: 'Pipeline 1 - Terraform GKE'
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'tp3/HIT3/terraform/gke/**'
+  pull_request:
+    paths:
+      - 'tp3/HIT3/terraform/gke/**'
+
+jobs:
+  terraform:
+    name: 'Terraform Plan & Apply GKE'
+    runs-on: ubuntu-latest
+
+    env:
+      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
+      TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+    defaults:
+      run:
+        working-directory: tp3/HIT3/terraform/gke
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        if: github.event_name == 'pull_request'
+        run: terraform plan -no-color
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        run: terraform apply -auto-approve -input=false
