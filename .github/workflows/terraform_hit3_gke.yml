@@ -15,8 +15,11 @@ jobs:
     name: 'Terraform Plan & Apply GKE'
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     env:
-      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
       TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     defaults:
@@ -26,6 +29,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Auth to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/996435690701/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'terraform-bot@proyecto-sobel-grupo404.iam.gserviceaccount.com'
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3

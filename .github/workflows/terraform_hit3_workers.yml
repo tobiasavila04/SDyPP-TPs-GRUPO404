@@ -22,8 +22,11 @@ jobs:
     name: 'Manage External Workers'
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     env:
-      GOOGLE_CREDENTIALS: ${{ secrets.GCP_CREDENTIALS }}
       TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
       TF_VAR_worker_count: ${{ inputs.worker_count }}
       TF_VAR_worker_image: ${{ secrets.DOCKERHUB_USERNAME }}/sobel-app:latest
@@ -42,7 +45,8 @@ jobs:
       - name: Auth to GCP (necesario para obtener la IP del LoadBalancer de RabbitMQ)
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          workload_identity_provider: 'projects/996435690701/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'terraform-bot@proyecto-sobel-grupo404.iam.gserviceaccount.com'
 
       - name: Get GKE credentials
         uses: google-github-actions/get-gke-credentials@v2

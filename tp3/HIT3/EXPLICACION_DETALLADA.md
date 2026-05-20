@@ -221,3 +221,9 @@ Para los workers elásticos usamos workflow_dispatch en Github Actions. Lo clave
 ## 💡 Nota / Pro-Tip sobre el DLQ Monitor
 Para que no nos critiquen en la entrega: Si un chunk de imagen viene totalmente corrupto, va a fallar siempre. Si nuestro DLQ Monitor lo reencola ciegamente, vamos a generar un bucle infinito (*Poison Pill*). 
 **Lo solucionamos** agregándole lógica al callback de `dlq_monitor.py` para que lea los headers `x-death` de RabbitMQ. Si vemos que el `count` llegó a 3, tiramos un log de "ALERTA" y le hacemos ACK de una para que muera definitivamente y no sature el cluster.
+
+---
+
+## 💡 Pro-Tip de Seguridad (Keyless Auth)
+Como un extra para la arquitectura, decidimos **NO** usar claves JSON estáticas para que GitHub Actions se conecte a Google Cloud. Si un JSON se filtra, es un agujero de seguridad gravísimo. 
+En su lugar, armamos todo usando **Workload Identity Federation (WIF / OIDC)**. Con esto, GitHub y GCP generan tokens temporales efímeros (que duran 1 horita y se autodestruyen) sin tener que guardar contraseñas fijas en los secretos del repo. ¡Un detalle de SRE puro!
